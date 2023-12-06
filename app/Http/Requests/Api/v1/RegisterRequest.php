@@ -30,4 +30,17 @@ class RegisterRequest extends FormRequest
             'address'  => 'required|string|min:5',
         ];
     }
+
+    /**
+     * Get custom message for validator errors.
+     * 
+     * @return array
+     */
+    // public function messages()
+    // {
+    //     return [
+            
+
+    //     ];
+    // }
 }
