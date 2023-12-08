@@ -6,21 +6,35 @@ use App\Models\User;
 
 class UserService 
 {
+   /**
+    * Create user.
+    *@var array $data
+    *@return User
+    */
    public function create($data) {
     $user = new User();
     $user->fill($data);
     $user->save();
 
-
+    return $user;
    }
    public function update($id, $data) {
     $user = User::findOrFail($id);
     $user->fill($data);
     $user->save();
 
+    return $user;
    }
    public function delete($id) {
     $user = User::findOrFail($id);
     $user->delete();
+
+    return true;
    }
+   public function register($data) {
+      $user = $this->create($data);
+      $token = $user->createToken('API TOKEN')->plainTextToken;
+      return compact('user', 'token');
+     }
+
 }

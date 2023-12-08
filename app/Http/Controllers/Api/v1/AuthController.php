@@ -1,33 +1,27 @@
 <?php
 
-namespace App\Http\Controllers\Api\v1\Admin;
+namespace App\Http\Controllers\Api\V1;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Api\v1\RegisterRequest;
 use App\Http\Requests\Api\v1\LoginRequest;
-use App\Http\Resources\Api\v1\AuthResource;
-use App\Models\User;
-use Illuminate\Http\Response;
+use App\Http\Resources\Api\V1\AuthResource;
+use App\Services\UserService;
 
 class AuthController extends Controller
 {
-   
+    private UserService $userService;
+    function __construct(UserService $userService){
+        $this->userService = $userService;
+    }
 
     /**
      * Register.
      */
     public function register(RegisterRequest $request)
     {
-
-        $data = $request->validated();
-        $user = User::create($data);
-
-        // return response()->json([
-        //     'status' => true,
-        //     'user'   => $user,
-        // ], Response::HTTP_CREATED);
-
-        return AuthResource::make($user);
+        $userData = $this->userService->register($request->validated());
+        return AuthResource::make($userData);
 
 
     }

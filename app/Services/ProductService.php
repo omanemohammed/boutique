@@ -11,6 +11,7 @@ class ProductService
     $product->fill($data);
     $product->save();
 
+    return $product;
 
    }
    public function update($id, $data) {
@@ -18,9 +19,13 @@ class ProductService
     $product->fill($data);
     $product->save();
 
+    return $product;
    }
    public function delete($id) {
     $product = Product::findOrFail($id);
     $product->delete();
+
+    return true;
+
    }
 }
