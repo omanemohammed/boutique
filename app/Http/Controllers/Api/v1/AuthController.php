@@ -7,6 +7,7 @@ use App\Http\Requests\Api\v1\RegisterRequest;
 use App\Http\Requests\Api\v1\LoginRequest;
 use App\Http\Resources\Api\V1\AuthResource;
 use App\Services\UserService;
+use GuzzleHttp\Psr7\Response;
 
 class AuthController extends Controller
 {
@@ -23,17 +24,22 @@ class AuthController extends Controller
         $userData = $this->userService->register($request->validated());
         return AuthResource::make($userData);
 
-
     }
-
-
 
     /**
      * Login.
      */
     public function login(LoginRequest $request)
     {
-        //
+        $data = $this->userService->login($request->validated());
+
+        if (!$data) {
+            return response()->json([
+                'message' => __('Invalid Credentials')
+            ], 401);// (Response::HTTP_UNAUTHRIZED) = 401
+        }
+        return AuthResource::make($data);
+
     }
 
     /**

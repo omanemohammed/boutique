@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Models\User;
+use Illuminate\Support\Facades\Auth;
 
 class UserService 
 {
@@ -36,5 +37,18 @@ class UserService
       $token = $user->createToken('API TOKEN')->plainTextToken;
       return compact('user', 'token');
      }
+   public function login($data) 
+   {
+      if(Auth::attempt($data)) {
+         $user = User::where('email', $data['email'])->first();
+         $token = $user->createToken('API TOKEN')->plainTextToken;
+
+         return compact('user', 'token');
+      }
+
+      return false;
+
+     }
+
 
 }
