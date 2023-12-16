@@ -19,8 +19,10 @@ class UserService
 
     return $user;
    }
-   public function update($id, $data) {
-    $user = User::findOrFail($id);
+   public function update($user, $data) {
+    if(!($user instanceof User)) {
+       $user = User::findOrFail($user);
+    }  
     $user->fill($data);
     $user->save();
 
@@ -48,6 +50,16 @@ class UserService
 
       return false;
 
+     }
+
+     public function logout() 
+     {
+      /**
+       * @var User $user
+       */
+         $user = auth()->user();
+         $user->tokens()->delete();
+         return true ;
      }
 
 

@@ -47,6 +47,7 @@ class AuthController extends Controller
      */
     public function logout()
     {
-        //
+        $this->userService->logout();
+        return response()->json([], 204);
     }
 }
