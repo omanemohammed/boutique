@@ -1,14 +1,9 @@
 <?php
 
-namespace App\Http\Controllers\Api\v1\Admin;
-
-namespace App\Http\Controllers\Api\v1\Admin\Admin;
-
+namespace App\Http\Controllers\Api\v1\admin;
 
 use App\Models\Category;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\StoreCategoryRequest;
-use App\Http\Requests\UpdateCategoryRequest;
 
 class CategoryController extends Controller
 {
@@ -23,7 +18,7 @@ class CategoryController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreCategoryRequest $request)
+    public function store(CategoryRequest $request)
     {
         //
     }
@@ -39,7 +34,7 @@ class CategoryController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateCategoryRequest $request, Category $category)
+    public function update(CategoryRequest $request, Category $category)
     {
         //
     }

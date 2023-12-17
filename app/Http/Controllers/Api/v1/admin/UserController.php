@@ -27,7 +27,7 @@ class UserController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store($request)
+    public function store(UserRequest $request)
     {
         $userData = $this->userService->register($request->validated());
         return UserResource::make($userData);
@@ -56,6 +56,7 @@ class UserController extends Controller
      */
     public function destroy(User $user)
     {
-        //
+        $user = $this->userService->delete($user);
+        return $this->noContentResponse();
     }
 }

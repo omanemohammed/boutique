@@ -29,7 +29,7 @@ class UserRequest extends FormRequest
             $user = $user->id;
         }
         $rules = [
-            'name'     => 'required|string|min:2|max:50',
+            'name'     => 'required|string|min:2|max: 50',
             'email'    => 'required|email|'. Rule::unique('user')->ignore($user)->withoutTrashed(),
             'mobile'   => 'required|numeric|' . Rule::unique('user')->ignore($user)->withoutTrashed(),
             'password' => 'required|confirmed|min:8',

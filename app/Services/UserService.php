@@ -12,7 +12,8 @@ class UserService
     *@var array $data
     *@return User
     */
-   public function create($data) {
+   public function create(array $data):User
+   {
     $user = new User();
     $user->fill($data);
     $user->save();
@@ -28,18 +29,20 @@ class UserService
 
     return $user;
    }
-   public function delete($id) {
+   public function delete(int|User $id):bool 
+   {
     $user = User::findOrFail($id);
     $user->delete();
 
     return true;
    }
-   public function register($data) {
+   public function register(array $data): array
+    {
       $user = $this->create($data);
       $token = $user->createToken('API TOKEN')->plainTextToken;
       return compact('user', 'token');
      }
-   public function login($data) 
+   public function login(array $data)
    {
       if(Auth::attempt($data)) {
          $user = User::where('email', $data['email'])->first();

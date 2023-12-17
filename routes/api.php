@@ -1,6 +1,6 @@
 <?php
 
-use App\Http\Controllers\Api\v1\Admin\Admin\CategoryController;
+use App\Http\Controllers\Api\v1\admin\CategoryController;
 use App\Http\Controllers\Api\v1\Admin\OrderController;
 use App\Http\Controllers\Api\v1\Admin\OrderDetailController;
 use App\Http\Controllers\Api\v1\Admin\ProductController;
