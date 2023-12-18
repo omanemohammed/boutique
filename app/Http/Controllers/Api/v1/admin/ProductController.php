@@ -4,25 +4,34 @@ namespace App\Http\Controllers\Api\v1\Admin;
 
 use App\Models\Product;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\StoreProductRequest;
-use App\Http\Requests\UpdateProductRequest;
+use App\Http\Requests\Api\v1\ProductRequest;
+use App\Http\Resources\Api\V1\ProductResource;
+use App\Services\ProductService;
 
 class ProductController extends Controller
 {
+    private ProductService $productService;
+    function __construct(ProductService $productService){
+        $this->productService = $productService;
+    }
+
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        //
+        $items = Product::pagination();
+        return ProductResource::collection($items);
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreProductRequest $request)
+    public function store(ProductRequest $request)
     {
-        //
+        $productData = $this->productService->register($request->validated());
+        return ProductResource::make($productData);
+
     }
 
     /**
@@ -30,15 +39,16 @@ class ProductController extends Controller
      */
     public function show(Product $product)
     {
-        //
+        return ProductResource::make($product);
+
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateProductRequest $request, Product $product)
+    public function update(ProductRequest $request, Product $product)
     {
-        //
+        $product = $this->productService->update($product, $request->validated());
     }
 
     /**
@@ -46,6 +56,7 @@ class ProductController extends Controller
      */
     public function destroy(Product $product)
     {
-        //
+        $product = $this->productService->delete($product);
+        return $this->noContentResponse();
     }
 }
